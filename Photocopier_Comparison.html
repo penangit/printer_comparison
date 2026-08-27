@@ -1,0 +1,1293 @@
+<title>Photocopier Comparison</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f5f4f1;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #eae8e4;
+  --text-primary: #1a1a1a;
+  --text-secondary: #5a5651;
+  --text-tertiary: #8a8580;
+  --border: #d6d3ce;
+  --border-light: #e8e6e2;
+  --accent: #2563a8;
+  --accent-light: #e8f0fa;
+  --accent-text: #1a4f8a;
+  --green: #1a7a4a;
+  --green-bg: #e6f5ee;
+  --red: #b33a2a;
+  --red-bg: #fce8e5;
+  --amber: #946b1a;
+  --amber-bg: #fef5e0;
+  --tag-new: #1a7a4a;
+  --tag-new-bg: #e6f5ee;
+  --tag-recond: #946b1a;
+  --tag-recond-bg: #fef5e0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141312;
+    --bg-surface: #1e1d1b;
+    --bg-surface-alt: #2a2826;
+    --text-primary: #e8e6e2;
+    --text-secondary: #a8a49e;
+    --text-tertiary: #706c66;
+    --border: #3a3835;
+    --border-light: #2e2c29;
+    --accent: #5b9ee0;
+    --accent-light: #1a2a3e;
+    --accent-text: #7bb5f0;
+    --green: #4ac88a;
+    --green-bg: #0e2a1a;
+    --red: #e06050;
+    --red-bg: #2e1a16;
+    --amber: #d4a840;
+    --amber-bg: #2a2010;
+    --tag-new: #4ac88a;
+    --tag-new-bg: #0e2a1a;
+    --tag-recond: #d4a840;
+    --tag-recond-bg: #2a2010;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.4);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141312;
+  --bg-surface: #1e1d1b;
+  --bg-surface-alt: #2a2826;
+  --text-primary: #e8e6e2;
+  --text-secondary: #a8a49e;
+  --text-tertiary: #706c66;
+  --border: #3a3835;
+  --border-light: #2e2c29;
+  --accent: #5b9ee0;
+  --accent-light: #1a2a3e;
+  --accent-text: #7bb5f0;
+  --green: #4ac88a;
+  --green-bg: #0e2a1a;
+  --red: #e06050;
+  --red-bg: #2e1a16;
+  --amber: #d4a840;
+  --amber-bg: #2a2010;
+  --tag-new: #4ac88a;
+  --tag-new-bg: #0e2a1a;
+  --tag-recond: #d4a840;
+  --tag-recond-bg: #2a2010;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 1060px; margin: 0 auto; padding: 32px 20px 64px; }
+
+.header { margin-bottom: 40px; }
+.header-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent-text); margin-bottom: 8px;
+}
+.header h1 {
+  font-size: 28px; font-weight: 700; line-height: 1.2;
+  text-wrap: balance; color: var(--text-primary); margin-bottom: 6px;
+}
+.header-sub { color: var(--text-secondary); font-size: 15px; line-height: 1.5; }
+.header-meta {
+  display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px;
+  font-size: 13px; color: var(--text-tertiary);
+}
+.header-meta span { display: flex; align-items: center; gap: 4px; }
+
+.section { margin-bottom: 40px; }
+.section-title {
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 4px; text-wrap: balance;
+}
+.section-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+
+.usage-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.stat-card {
+  background: var(--bg-surface); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 16px; box-shadow: var(--shadow);
+}
+.stat-label {
+  font-size: 12px; font-weight: 500; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px;
+}
+.stat-value {
+  font-size: 24px; font-weight: 700; color: var(--text-primary);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.stat-unit { font-size: 13px; font-weight: 400; color: var(--text-secondary); }
+.stat-note { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+.location-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.04em; color: var(--text-tertiary); text-transform: uppercase;
+  margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light);
+}
+
+.table-wrap {
+  overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 16px;
+  border-radius: 8px; border: 1px solid var(--border-light); box-shadow: var(--shadow);
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--bg-surface); }
+thead th {
+  background: var(--bg-surface-alt); font-weight: 600; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary);
+  text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border);
+  white-space: nowrap; position: sticky; top: 0;
+}
+td {
+  padding: 8px 12px; border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary); vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+td:first-child {
+  font-weight: 500; color: var(--text-secondary); white-space: nowrap; min-width: 130px;
+}
+
+.tag {
+  display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 2px 6px; border-radius: 4px; text-transform: uppercase; vertical-align: middle;
+}
+.tag-new { color: var(--tag-new); background: var(--tag-new-bg); }
+.tag-recond { color: var(--tag-recond); background: var(--tag-recond-bg); }
+.tag-current { color: var(--accent-text); background: var(--accent-light); }
+
+.callout {
+  border-radius: 8px; padding: 16px 20px; font-size: 14px;
+  line-height: 1.6; margin-bottom: 16px;
+}
+.callout-green { background: var(--green-bg); color: var(--green); border-left: 3px solid var(--green); }
+.callout-red { background: var(--red-bg); color: var(--red); border-left: 3px solid var(--red); }
+.callout-amber { background: var(--amber-bg); color: var(--amber); border-left: 3px solid var(--amber); }
+.callout-accent { background: var(--accent-light); color: var(--accent-text); border-left: 3px solid var(--accent); }
+.callout strong { font-weight: 700; }
+
+.verdict-better { color: var(--green); font-weight: 600; }
+.verdict-worse { color: var(--red); font-weight: 600; }
+.verdict-same { color: var(--text-tertiary); }
+.verdict-na { color: var(--text-tertiary); font-style: italic; }
+
+.cost-val { font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
+.cost-savings { color: var(--green); font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+.cost-more { color: var(--red); font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+
+.speed-badge {
+  display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px;
+  border-radius: 3px; margin-left: 4px; vertical-align: middle;
+}
+.speed-slower { background: var(--red-bg); color: var(--red); }
+.speed-faster { background: var(--green-bg); color: var(--green); }
+.speed-same { background: var(--bg-surface-alt); color: var(--text-tertiary); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+.tab-bar {
+  display: flex; gap: 0; border-bottom: 2px solid var(--border);
+  margin-bottom: 20px; overflow-x: auto;
+}
+.tab-btn {
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  color: var(--text-tertiary); background: none; border: none;
+  padding: 10px 18px; cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; white-space: nowrap; transition: color 0.15s, border-color 0.15s;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--accent-text); border-bottom-color: var(--accent); font-weight: 600; }
+.tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 2px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.procon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.procon-col h4 {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; margin-bottom: 8px;
+}
+.procon-col.pros h4 { color: var(--green); }
+.procon-col.cons h4 { color: var(--red); }
+.procon-col ul { list-style: none; padding: 0; }
+.procon-col li {
+  font-size: 14px; padding: 5px 0; padding-left: 18px; position: relative;
+  color: var(--text-primary); line-height: 1.5;
+}
+.procon-col.pros li::before { content: '+'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.procon-col.cons li::before { content: '\2212'; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+
+.note { font-size: 13px; color: var(--text-tertiary); font-style: italic; margin-top: 8px; }
+
+.addon-card {
+  background: var(--bg-surface); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 12px;
+}
+.addon-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+.addon-card .addon-specs { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.addon-card .addon-specs strong { color: var(--text-primary); }
+
+.steps-list { counter-reset: step; list-style: none; padding: 0; }
+.steps-list li {
+  counter-increment: step; padding: 12px 0 12px 40px; position: relative;
+  border-bottom: 1px solid var(--border-light); font-size: 14px;
+  line-height: 1.6; color: var(--text-primary);
+}
+.steps-list li:last-child { border-bottom: none; }
+.steps-list li::before {
+  content: counter(step); position: absolute; left: 0; top: 12px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--accent-light); color: var(--accent-text);
+  font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.steps-list li strong { font-weight: 600; }
+
+@media (max-width: 700px) {
+  .header h1 { font-size: 22px; }
+  .usage-grid { grid-template-columns: 1fr 1fr; }
+  td:first-child { min-width: 100px; font-size: 12px; }
+  table { font-size: 12px; }
+  td, th { padding: 6px 8px; }
+  .procon-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== Theme Toggle ===== */
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 14px; box-shadow: var(--shadow-md);
+  cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent-text); }
+.theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle .icon-sun, .theme-toggle .icon-moon { display: none; }
+:root:not([data-theme]) .theme-toggle .icon-sun { display: inline; }
+:root:not([data-theme]) .theme-toggle .icon-moon { display: inline; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: inline; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+
+/* ===== Product Images Row ===== */
+.product-images {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 20px;
+}
+.product-img-card {
+  background: var(--bg-surface); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 12px; text-align: center; box-shadow: var(--shadow);
+}
+.product-img-card img {
+  max-height: 120px; width: auto; max-width: 100%;
+  object-fit: contain; margin-bottom: 8px;
+  border-radius: 4px;
+}
+.product-img-card .img-label {
+  font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  line-height: 1.3;
+}
+.product-img-card .img-sublabel {
+  font-size: 11px; color: var(--text-tertiary); margin-top: 2px;
+}
+
+@media (max-width: 700px) {
+  .product-images { grid-template-columns: 1fr 1fr; }
+  .theme-toggle { top: auto; bottom: 16px; right: 16px; }
+}
+
+@media print {
+  .tab-panel { display: block !important; }
+  .tab-bar { display: none; }
+  .page { max-width: 100%; padding: 16px; }
+  .theme-toggle { display: none; }
+}
+</style>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <span id="themeLabel">Toggle theme</span>
+</button>
+
+<div class="page">
+
+<div class="header">
+  <div class="header-eyebrow">Hotel Neo+ Penang &middot; IT &amp; Finance Review</div>
+  <h1>Photocopier Rental Comparison</h1>
+  <div class="header-sub">Current LBS machines (each shown separately) vs. LBS renewal vs. Dynacom (Canon) &mdash; technical capabilities, feature parity, and 5-year cost projections.</div>
+  <div class="header-meta">
+    <span>Prepared 25 Aug 2026</span>
+    <span>&middot;</span>
+    <span>Decision deadline: ~8 Sep 2026</span>
+    <span>&middot;</span>
+    <span>2 units required</span>
+  </div>
+</div>
+
+<!-- ========== CURRENT USAGE ========== -->
+<div class="section">
+  <div class="section-title">Your Current Usage</div>
+  <div class="section-desc">Data pulled from each printer's built-in usage page. Contract started ~2019 (approx. 7 years of cumulative data).</div>
+
+  <div class="location-label">Sales Office &mdash; HP PageWide Color Flow E77660</div>
+  <div class="usage-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Impressions</div>
+      <div class="stat-value">327,314</div>
+      <div class="stat-note">Mono 306,716 &middot; Colour 23,048</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Print</div>
+      <div class="stat-value">230,954</div>
+      <div class="stat-note">Mono dominant, ~7% colour</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Copy</div>
+      <div class="stat-value">59,762</div>
+      <div class="stat-note">Mostly A4 monochrome</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Scans</div>
+      <div class="stat-value">54,132</div>
+      <div class="stat-note">Copy 31k &middot; Send 22k &middot; Fax 0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Duplex</div>
+      <div class="stat-value">16,668</div>
+      <div class="stat-note">Low duplex usage</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Est. Monthly Avg</div>
+      <div class="stat-value">~3,900</div>
+      <div class="stat-unit">impressions/month</div>
+    </div>
+  </div>
+
+  <div class="location-label">Finance Basement &mdash; HP PageWide Color MFP P77940</div>
+  <div class="usage-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Impressions</div>
+      <div class="stat-value">257,008</div>
+      <div class="stat-note">Mono 250,241 &middot; Colour 6,767</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Print</div>
+      <div class="stat-value">228,775</div>
+      <div class="stat-note">~97% monochrome</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Copy</div>
+      <div class="stat-value">20,233</div>
+      <div class="stat-note">Very low colour copy</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Scans</div>
+      <div class="stat-value">45,556</div>
+      <div class="stat-note">Copy 22k &middot; Send 23k &middot; Fax 0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Duplex</div>
+      <div class="stat-value">59,845</div>
+      <div class="stat-note">Heavy duplex user</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Est. Monthly Avg</div>
+      <div class="stat-value">~3,060</div>
+      <div class="stat-unit">impressions/month</div>
+    </div>
+  </div>
+
+  <div class="callout callout-accent">
+    <strong>Usage pattern:</strong> Both printers are heavily monochrome (93–97%). Combined volume is roughly <strong>7,000 impressions/month</strong> across both units. Neither printer approaches 10K/month individually, so the 5K meter bundle is the most realistic tier. Colour usage is minimal. Fax is unused. Scanning (especially scan-to-send) is actively used on both machines.
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ========== TABBED COMPARISON ========== -->
+<div class="section">
+  <div class="section-title">Full Comparison</div>
+
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tech" tabindex="0">Technical Specs</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="features" tabindex="-1">Feature Checklist</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="finance" tabindex="-1">Cost &amp; Finance</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="procon" tabindex="-1">Pros &amp; Cons</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="addons" tabindex="-1">Dynacom Add-ons</button>
+  </div>
+
+  <!-- ===== TECHNICAL SPECS TAB ===== -->
+  <div class="tab-panel active" id="tab-tech" role="tabpanel">
+    <div class="section-desc">Current models shown separately so you can see exactly what each location has vs. what each new option offers.</div>
+    <div class="product-images">
+      <div class="product-img-card">
+        <img src="data:image/jpeg;base64,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" alt="HP PageWide Color Flow E77660">
+        <div class="img-label">HP E77660</div>
+        <div class="img-sublabel">Sales Office <span class="tag tag-current">Current</span></div>
+      </div>
+      <div class="product-img-card">
+        <img src="data:image/jpeg;base64,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" alt="HP PageWide Color MFP P77940">
+        <div class="img-label">HP P77940</div>
+        <div class="img-sublabel">Finance <span class="tag tag-current">Current</span></div>
+      </div>
+      <div class="product-img-card">
+        <img src="data:image/jpeg;base64,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" alt="HP Color LaserJet Managed MFP E785">
+        <div class="img-label">HP E785</div>
+        <div class="img-sublabel">LBS Renewal <span class="tag tag-new">New</span></div>
+      </div>
+      <div class="product-img-card">
+        <img src="data:image/jpeg;base64,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" alt="Canon imageRUNNER ADVANCE C3530i">
+        <div class="img-label">Canon C3530i</div>
+        <div class="img-sublabel">Dynacom <span class="tag tag-recond">Recond</span></div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Specification</th>
+            <th>Sales Office<br>HP E77660 <span class="tag tag-current">Current</span></th>
+            <th>Finance<br>HP P77940 <span class="tag tag-current">Current</span></th>
+            <th>LBS Renewal<br>HP E785 <span class="tag tag-new">New</span></th>
+            <th>Dynacom<br>Canon C3530i <span class="tag tag-recond">Recond</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Year Released</td>
+            <td>~2018</td>
+            <td>~2019</td>
+            <td>2022</td>
+            <td>2017 <span class="speed-badge speed-slower">oldest</span></td>
+          </tr>
+          <tr>
+            <td>Technology</td>
+            <td>PageWide (inkjet)</td>
+            <td>PageWide (inkjet)</td>
+            <td>Colour Laser</td>
+            <td>Colour Laser</td>
+          </tr>
+          <tr>
+            <td>Condition</td>
+            <td>In use ~7 years</td>
+            <td>In use ~7 years</td>
+            <td><span class="verdict-better">Brand New</span></td>
+            <td><span class="verdict-worse">Reconditioned</span></td>
+          </tr>
+          <tr>
+            <td>Print Speed (A4)</td>
+            <td><strong>60 ppm</strong></td>
+            <td><strong>40 ppm</strong></td>
+            <td>23 ppm (28 w/ licence) <span class="speed-badge speed-slower">slower</span></td>
+            <td>30 ppm <span class="speed-badge speed-slower">slower</span></td>
+          </tr>
+          <tr>
+            <td>Print Speed (A3)</td>
+            <td>Yes (supported)</td>
+            <td>Yes (supported)</td>
+            <td>Yes (supported)</td>
+            <td>15 ppm (A3)</td>
+          </tr>
+          <tr>
+            <td>Print Resolution</td>
+            <td><strong>2400 × 1200 dpi</strong></td>
+            <td><strong>2400 × 1200 dpi</strong></td>
+            <td>1200 × 1200 dpi <span class="speed-badge speed-slower">lower</span></td>
+            <td>1200 × 1200 dpi <span class="speed-badge speed-slower">lower</span></td>
+          </tr>
+          <tr>
+            <td>First Copy Out</td>
+            <td>~7.9 sec</td>
+            <td>~7.9 sec</td>
+            <td>7.3s BW / 9.5s CL</td>
+            <td>5.9s BW / 8.2s CL <span class="speed-badge speed-faster">faster</span></td>
+          </tr>
+          <tr>
+            <td>Duplex Print</td>
+            <td>Auto (standard)</td>
+            <td>Auto (standard)</td>
+            <td>Auto (standard)</td>
+            <td>Auto (standard)</td>
+          </tr>
+          <tr>
+            <td>ADF Type</td>
+            <td><strong>200-sheet</strong> single-pass duplex</td>
+            <td><strong>200-sheet</strong> ADF</td>
+            <td>100-sheet single-pass duplex</td>
+            <td>100-sheet duplex (DADF-AV1)*</td>
+          </tr>
+          <tr>
+            <td>Scan Speed (1-sided)</td>
+            <td><strong>120 ipm</strong></td>
+            <td>50 ipm</td>
+            <td>60 ipm</td>
+            <td>70 ipm <span class="speed-badge speed-faster">faster vs P77940</span></td>
+          </tr>
+          <tr>
+            <td>Scan Speed (2-sided)</td>
+            <td><strong>240 ipm</strong></td>
+            <td>35 ipm</td>
+            <td>120 ipm <span class="speed-badge speed-slower">slower vs E77660</span></td>
+            <td>35 ipm* <span class="speed-badge speed-same">= P77940</span></td>
+          </tr>
+          <tr>
+            <td>Scan Resolution</td>
+            <td>600 × 600 dpi</td>
+            <td>600 × 600 dpi</td>
+            <td>600 × 600 dpi</td>
+            <td>600 × 600 dpi</td>
+          </tr>
+          <tr>
+            <td>Paper Capacity (Std)</td>
+            <td>1,600 sheets</td>
+            <td>650 sheets</td>
+            <td>1,140 sheets</td>
+            <td>1,200 sheets</td>
+          </tr>
+          <tr>
+            <td>Paper Capacity (Max)</td>
+            <td><strong>4,650 sheets</strong></td>
+            <td>2,300 sheets</td>
+            <td>2,180 sheets</td>
+            <td>2,300 sheets</td>
+          </tr>
+          <tr>
+            <td>Output Capacity</td>
+            <td>500 sheets</td>
+            <td>500 sheets</td>
+            <td>500 sheets</td>
+            <td>250 sheets</td>
+          </tr>
+          <tr>
+            <td>Media Weight</td>
+            <td>60–300 gsm</td>
+            <td>60–300 gsm</td>
+            <td>60–220 gsm</td>
+            <td>52–300 gsm (bypass)</td>
+          </tr>
+          <tr>
+            <td>Touchscreen</td>
+            <td>8.0" colour</td>
+            <td>8.0" colour</td>
+            <td>8.0" colour</td>
+            <td><strong>10.1" colour</strong> <span class="speed-badge speed-faster">bigger</span></td>
+          </tr>
+          <tr>
+            <td>Memory / RAM</td>
+            <td>5.6 GB</td>
+            <td>3.5 GB</td>
+            <td><strong>6 GB</strong></td>
+            <td>3 GB</td>
+          </tr>
+          <tr>
+            <td>Storage</td>
+            <td>N/A (firmware)</td>
+            <td>N/A (firmware)</td>
+            <td>32 GB eMMC (opt. 500GB HDD)</td>
+            <td><strong>250 GB HDD</strong> (opt. 1 TB)</td>
+          </tr>
+          <tr>
+            <td>Ethernet</td>
+            <td>Gigabit 10/100/1000</td>
+            <td>Gigabit 10/100/1000</td>
+            <td>Gigabit 10/100/1000</td>
+            <td>Gigabit 10/100/1000</td>
+          </tr>
+          <tr>
+            <td>Wireless</td>
+            <td>Optional</td>
+            <td>Optional</td>
+            <td>Optional</td>
+            <td><span class="verdict-better">Standard (built-in)</span></td>
+          </tr>
+          <tr>
+            <td>USB Ports</td>
+            <td>2× USB 2.0 Host, 1× Device</td>
+            <td>2× USB 2.0 Host, 1× Device</td>
+            <td>1× USB 3.0, 2× USB 2.0</td>
+            <td>1× USB 3.0, 1× USB 2.0, 1× Device</td>
+          </tr>
+          <tr>
+            <td>Processor</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td><strong>Quad-core 1.6 GHz + Dual 1.4 GHz</strong></td>
+            <td>Canon Dual Custom</td>
+          </tr>
+          <tr>
+            <td>Weight</td>
+            <td>~82 kg</td>
+            <td>~69 kg</td>
+            <td>77.8 kg</td>
+            <td>68–82 kg (with ADF)</td>
+          </tr>
+          <tr>
+            <td>Sleep Power</td>
+            <td>1.6W</td>
+            <td>1.6W</td>
+            <td>0.8W <span class="speed-badge speed-faster">lower</span></td>
+            <td>0.8W <span class="speed-badge speed-faster">lower</span></td>
+          </tr>
+          <tr>
+            <td>Monthly Duty Cycle</td>
+            <td><strong>150,000 pages</strong></td>
+            <td><strong>150,000 pages</strong></td>
+            <td>60,000–80,000 pages <span class="speed-badge speed-slower">lower</span></td>
+            <td>Not stated (workgroup class)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">* Canon C3530i standard ADF (DADF-AV1) flips the page for 2-sided scanning (35 ipm). The optional Single-Pass DADF-A1 scans both sides at once (160 ipm) but Dynacom says it's only available if the recond unit already has it fitted.</p>
+
+    <div class="callout callout-amber" style="margin-top:16px">
+      <strong>Print resolution:</strong> Both new options are 1200 × 1200 dpi — half the 2400 × 1200 dpi on your current HP PageWides. For everyday office printing and mono docs this won't be noticeable. For high-quality colour marketing materials or photos, you may see a difference. At your usage pattern (93–97% mono documents), this is unlikely to matter day-to-day.
+    </div>
+
+    <div class="callout callout-accent" style="margin-top:0">
+      <strong>Notable speed differences:</strong> The Sales Office E77660 is the faster machine — 60 ppm print and 240 ipm duplex scan. Both new options are noticeably slower than it (23–30 ppm print, 35–120 ipm duplex scan). However, the Finance P77940 is slower: its duplex scan speed (35 ipm) is identical to the Canon C3530i's, and the Canon actually scans faster single-sided (70 vs 50 ipm). The HP E785 sits in between — slower than the E77660 but faster than the P77940 on scanning. The Canon wins on first-copy-out time (5.9s vs 7.3–7.9s) which matters for quick one-off copies.
+    </div>
+  </div>
+
+  <!-- ===== FEATURE CHECKLIST TAB ===== -->
+  <div class="tab-panel" id="tab-features" role="tabpanel">
+    <div class="section-desc">Your must-haves and what each option delivers. Green = meets or exceeds. Red = downgrade.</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Sales Office<br>HP E77660</th>
+            <th>Finance<br>HP P77940</th>
+            <th>LBS<br>HP E785</th>
+            <th>Dynacom<br>Canon C3530i</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Scan to Email</td>
+            <td class="verdict-better">Yes (SMTP, LDAP)</td>
+            <td class="verdict-better">Yes (SMTP, LDAP)</td>
+            <td class="verdict-better">Yes (SMTP/SSL, LDAP)</td>
+            <td class="verdict-better">Yes (SMTP, LDAP 2000)</td>
+          </tr>
+          <tr>
+            <td>Scan to Folder (SMB)</td>
+            <td class="verdict-better">Yes (SMB, FTP)</td>
+            <td class="verdict-better">Yes (SMB, FTP)</td>
+            <td class="verdict-better">Yes (SMB, FTP, sFTP, SharePoint)</td>
+            <td class="verdict-better">Yes (SMB 3.0, FTP, WebDAV)</td>
+          </tr>
+          <tr>
+            <td>Scan to USB</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+          </tr>
+          <tr>
+            <td>ADF (Auto Doc Feeder)</td>
+            <td class="verdict-better">200 sheets</td>
+            <td class="verdict-better">200 sheets</td>
+            <td>100 sheets</td>
+            <td>100 sheets</td>
+          </tr>
+          <tr>
+            <td>Duplex Scanning</td>
+            <td class="verdict-better">Single-pass (240 ipm)</td>
+            <td>Flip-scan (35 ipm)</td>
+            <td class="verdict-better">Single-pass (120 ipm)</td>
+            <td>Flip-scan (35 ipm)*</td>
+          </tr>
+          <tr>
+            <td>Colour Print</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+          </tr>
+          <tr>
+            <td>B/W Print</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+          </tr>
+          <tr>
+            <td>A4 Support</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+          </tr>
+          <tr>
+            <td>A3 Support</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+          </tr>
+          <tr>
+            <td>Ethernet (Gigabit)</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+            <td class="verdict-better">Yes</td>
+          </tr>
+          <tr>
+            <td>Wireless LAN</td>
+            <td>Optional</td>
+            <td>Optional</td>
+            <td>Optional</td>
+            <td class="verdict-better">Standard (built-in)</td>
+          </tr>
+          <tr>
+            <td>Duplex Print</td>
+            <td class="verdict-better">Auto</td>
+            <td class="verdict-better">Auto</td>
+            <td class="verdict-better">Auto</td>
+            <td class="verdict-better">Auto</td>
+          </tr>
+          <tr>
+            <td>Mobile Print</td>
+            <td class="verdict-better">AirPrint, ePrint</td>
+            <td class="verdict-better">AirPrint, ePrint</td>
+            <td class="verdict-better">AirPrint, Mopria, Wi-Fi Direct</td>
+            <td class="verdict-better">Canon PRINT, Direct AP</td>
+          </tr>
+          <tr>
+            <td>Fax</td>
+            <td>Optional (unused)</td>
+            <td>Optional (unused)</td>
+            <td>Optional</td>
+            <td>Optional</td>
+          </tr>
+          <tr>
+            <td>Stapling / Finishing</td>
+            <td>Optional inner finisher</td>
+            <td>Optional inner finisher</td>
+            <td>Optional inner finisher</td>
+            <td>Inner Finisher-K1 (if fitted)*</td>
+          </tr>
+          <tr>
+            <td>Hole Punch</td>
+            <td>Optional</td>
+            <td>Optional</td>
+            <td>Optional (2/3 or 2/4 hole)</td>
+            <td>Optional (external finisher only)</td>
+          </tr>
+          <tr>
+            <td>Booklet Making</td>
+            <td>Not available</td>
+            <td>Not available</td>
+            <td>Not mentioned</td>
+            <td>Optional (Booklet Finisher-AA1)</td>
+          </tr>
+          <tr>
+            <td>Secure Print</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td class="verdict-better">Yes (HP Wolf Security)</td>
+            <td class="verdict-better">Yes (Secure Print, Force Hold)</td>
+          </tr>
+          <tr>
+            <td>HDD Encryption</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>AES 256</td>
+            <td>FIPS 140-2 validated</td>
+          </tr>
+          <tr>
+            <td>Address Book</td>
+            <td>LDAP</td>
+            <td>LDAP</td>
+            <td>LDAP</td>
+            <td>LDAP 2000 / Local 1600 / One-touch 200</td>
+          </tr>
+          <tr>
+            <td>PDF Scan Formats</td>
+            <td>PDF, searchable PDF, TIFF, JPEG</td>
+            <td>PDF, searchable PDF, TIFF, JPEG</td>
+            <td>PDF, high-compress, PDF/A, JPEG, TIFF, XPS</td>
+            <td>PDF (searchable, compact, encrypted, PDF/A), TIFF, JPEG, XPS, Office XML</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">* Dynacom: Single-Pass DADF-A1 and Inner Finisher-K1 only available if the recond unit already has them. See the Dynacom Add-ons tab for details.</p>
+
+    <div class="callout callout-accent" style="margin-top:16px">
+      <strong>Feature parity verdict:</strong> All options cover your must-haves (scan to email, scan to folder, ADF, colour/BW, A4/A3, ethernet, duplex). Worth noting: your Finance P77940 already scans duplex at only 35 ipm (flip-scan), the same as the Canon C3530i — so for that location the Canon is <em>not</em> a downgrade on scan speed. The Sales Office E77660 is the one where you'd feel the biggest difference, going from 240 ipm duplex to either 120 ipm (E785) or 35 ipm (Canon). Both new options halve your ADF capacity from 200 to 100 sheets.
+    </div>
+  </div>
+
+  <!-- ===== COST & FINANCE TAB ===== -->
+  <div class="tab-panel" id="tab-finance" role="tabpanel">
+
+    <div class="section-desc">All costs in RM. Projections based on your actual usage (~3,000–4,000 impressions/unit/month, under 3% colour).</div>
+
+    <h3 style="font-size:15px; font-weight:600; margin-bottom:12px; color:var(--text-primary)">Contract Terms</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>LBS (HP E785)</th>
+            <th>Dynacom 5K Bundle</th>
+            <th>Dynacom 10K Bundle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Duration</td>
+            <td>60 months</td>
+            <td>60 months</td>
+            <td>60 months</td>
+          </tr>
+          <tr>
+            <td>Monthly Rental</td>
+            <td class="cost-val">RM 380.00</td>
+            <td class="cost-val">RM 235.00</td>
+            <td class="cost-val">RM 375.00</td>
+          </tr>
+          <tr>
+            <td>Free BW Copies</td>
+            <td>5,000 / month</td>
+            <td>5,000 / month</td>
+            <td>10,000 / month</td>
+          </tr>
+          <tr>
+            <td>Excess BW (A4)</td>
+            <td class="cost-val">RM 0.030</td>
+            <td class="cost-val">RM 0.030</td>
+            <td class="cost-val">RM 0.030</td>
+          </tr>
+          <tr>
+            <td>Excess BW (A3)</td>
+            <td class="verdict-na">Not stated (likely 2× A4)</td>
+            <td class="cost-val">RM 0.060</td>
+            <td class="cost-val">RM 0.060</td>
+          </tr>
+          <tr>
+            <td>Colour (A4)</td>
+            <td class="cost-more">RM 0.450</td>
+            <td class="cost-savings">RM 0.400</td>
+            <td class="cost-savings">RM 0.400</td>
+          </tr>
+          <tr>
+            <td>Colour (A3)</td>
+            <td class="verdict-na">Not stated</td>
+            <td class="cost-val">RM 0.800</td>
+            <td class="cost-val">RM 0.800</td>
+          </tr>
+          <tr>
+            <td>Deposit</td>
+            <td>Transfer from existing</td>
+            <td>RM 500 (refundable at expiry)</td>
+            <td>RM 500 (refundable at expiry)</td>
+          </tr>
+          <tr>
+            <td>Includes</td>
+            <td>Consumables (exc. paper), maintenance</td>
+            <td>Toner, drum, service, maintenance, parts, training</td>
+            <td>Same as 5K</td>
+          </tr>
+          <tr>
+            <td>Early Termination</td>
+            <td>Pay remaining rental</td>
+            <td>Pay remaining rental</td>
+            <td>Pay remaining rental</td>
+          </tr>
+          <tr>
+            <td>Demo / Trial</td>
+            <td>Not offered</td>
+            <td colspan="2" style="text-align:center"><span class="verdict-better">2-month free demo before signing</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px; font-weight:600; margin:24px 0 12px; color:var(--text-primary)">Monthly Cost Projection — Per Unit</h3>
+    <div class="section-desc">Based on your actual usage of ~4,000 BW + ~50 colour per unit per month.</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario (per unit)</th>
+            <th>LBS (HP E785)</th>
+            <th>Dynacom 5K Bundle</th>
+            <th>Difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>4,000 BW + 50 clr<br><span class="stat-note">(your actual usage)</span></td>
+            <td class="cost-val">RM 402.50</td>
+            <td class="cost-val">RM 255.00</td>
+            <td class="cost-savings">RM 147.50 saved (37%)</td>
+          </tr>
+          <tr>
+            <td>5,000 BW + 50 clr</td>
+            <td class="cost-val">RM 402.50</td>
+            <td class="cost-val">RM 255.00</td>
+            <td class="cost-savings">RM 147.50 saved (37%)</td>
+          </tr>
+          <tr>
+            <td>7,000 BW + 100 clr</td>
+            <td class="cost-val">RM 485.00</td>
+            <td class="cost-val">RM 335.00</td>
+            <td class="cost-savings">RM 150.00 saved (31%)</td>
+          </tr>
+          <tr>
+            <td>10,000 BW + 100 clr</td>
+            <td class="cost-val">RM 575.00</td>
+            <td class="cost-val">RM 425.00</td>
+            <td class="cost-savings">RM 150.00 saved (26%)</td>
+          </tr>
+          <tr>
+            <td>15,000 BW + 200 clr</td>
+            <td class="cost-val">RM 770.00</td>
+            <td class="cost-val">RM 580.00</td>
+            <td class="cost-savings">RM 190.00 saved (25%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px; font-weight:600; margin:24px 0 12px; color:var(--text-primary)">5-Year Total Cost — Both Units Combined</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>LBS Total (5 yr)</th>
+            <th>Dynacom Total (5 yr)</th>
+            <th>Total Savings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Actual usage<br><span class="stat-note">~4K BW + 50 clr each</span></td>
+            <td class="cost-val">RM 48,300</td>
+            <td class="cost-val">RM 30,600 <span class="stat-note">+ RM 1,000 dep.</span></td>
+            <td class="cost-savings">RM 16,700</td>
+          </tr>
+          <tr>
+            <td>Moderate growth<br><span class="stat-note">~7K BW + 100 clr each</span></td>
+            <td class="cost-val">RM 58,200</td>
+            <td class="cost-val">RM 40,200 <span class="stat-note">+ RM 1,000 dep.</span></td>
+            <td class="cost-savings">RM 17,000</td>
+          </tr>
+          <tr>
+            <td>High growth<br><span class="stat-note">~10K BW + 100 clr each</span></td>
+            <td class="cost-val">RM 69,000</td>
+            <td class="cost-val">RM 51,000 <span class="stat-note">+ RM 1,000 dep.</span></td>
+            <td class="cost-savings">RM 17,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-green">
+      <strong>Bottom line:</strong> At your actual usage level, Dynacom saves roughly <strong>RM 16,700 over 5 years</strong> (both units). That's about <strong>RM 278/month</strong> less. Even at double your current volume, the savings hold steady around RM 17,000 total. The deposit difference (RM 1,000 refundable vs transferred) is negligible.
+    </div>
+
+    <div class="callout callout-amber">
+      <strong>But consider the risk premium:</strong> Dynacom's units are reconditioned. If one unit needs replacement or suffers more downtime, the operational cost (staff time, disruption) could offset some savings. A brand new machine from LBS carries lower breakdown risk over 60 months — worth something, even if hard to put a number on. The 2-month demo helps you gauge this before committing.
+    </div>
+
+    <h3 style="font-size:15px; font-weight:600; margin:24px 0 12px; color:var(--text-primary)">Warranty &amp; Service Coverage</h3>
+    <div class="section-desc">Both are rental/managed contracts — the vendor owns the machine and is contractually obligated to keep it running for the full term. There is no separate "warranty" to expire because service is baked into the rental.</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>LBS (HP E785)</th>
+            <th>Dynacom (Canon C3530i)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Contract Type</td>
+            <td>Rental + Managed Service</td>
+            <td>Rental + Managed Service</td>
+          </tr>
+          <tr>
+            <td>Contract Duration</td>
+            <td>60 months (5 years)</td>
+            <td>60 months (5 years)</td>
+          </tr>
+          <tr>
+            <td>Equipment Ownership</td>
+            <td>LBS owns the machine</td>
+            <td>Dynacom owns the machine</td>
+          </tr>
+          <tr>
+            <td>Maintenance &amp; Repair</td>
+            <td>Included — vendor's responsibility</td>
+            <td>Included — monthly maintenance visits</td>
+          </tr>
+          <tr>
+            <td>Toner &amp; Consumables</td>
+            <td class="verdict-better">All consumables except paper</td>
+            <td class="verdict-better">Toner, drum, all parts — except paper</td>
+          </tr>
+          <tr>
+            <td>Spare Parts</td>
+            <td>Included (normal wear)</td>
+            <td>Included (normal wear)</td>
+          </tr>
+          <tr>
+            <td>Training</td>
+            <td>Not mentioned</td>
+            <td class="verdict-better">Included in contract</td>
+          </tr>
+          <tr>
+            <td>Separate Warranty?</td>
+            <td>N/A — rental contract covers service for full 60 months</td>
+            <td>N/A — rental contract covers service for full 60 months</td>
+          </tr>
+          <tr>
+            <td>Demo / Trial</td>
+            <td class="verdict-worse">Not offered</td>
+            <td class="verdict-better">2-month free demo before signing</td>
+          </tr>
+          <tr>
+            <td>Deposit</td>
+            <td>Transfers from existing contract</td>
+            <td>RM 500/unit (refundable at expiry)</td>
+          </tr>
+          <tr>
+            <td>Early Termination</td>
+            <td class="verdict-worse">Pay remaining rental in full</td>
+            <td class="verdict-worse">Pay remaining rental in full</td>
+          </tr>
+          <tr>
+            <td>End of Contract</td>
+            <td>Return machine to LBS</td>
+            <td>Return machine to Dynacom</td>
+          </tr>
+          <tr>
+            <td>Reconditioned Risk</td>
+            <td class="verdict-better">N/A — brand new machine</td>
+            <td class="verdict-worse">Unknown prior usage &amp; mileage — ask for meter count</td>
+          </tr>
+          <tr>
+            <td>Vendor Track Record</td>
+            <td class="verdict-better">Known since 2019</td>
+            <td>Existing relationship since Jan 2023 — Canon IR 2425 at Front Office (RM120/mo, 60-month contract via Dynamic Office Sdn Bhd)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-accent" style="margin-top:0">
+      <strong>Key point on "warranty":</strong> Neither quote mentions a standalone warranty because these are managed rental agreements — the vendor owns the equipment and is responsible for all repairs, parts, and consumables for the entire 60-month term. If a machine breaks, they fix or replace it at their cost. This is different from buying a copier outright where warranty matters. The real question is <em>service response time</em> — how fast does each vendor respond when something goes wrong? LBS has a track record with you; Dynacom is unproven but offering a 2-month demo to prove themselves.
+    </div>
+  </div>
+
+  <!-- ===== PROS & CONS TAB ===== -->
+  <div class="tab-panel" id="tab-procon" role="tabpanel">
+
+    <h3 style="font-size:15px; font-weight:600; margin-bottom:16px; color:var(--text-primary)">LBS Renewal — HP Color LaserJet Managed MFP E785 <span class="tag tag-new">New</span></h3>
+    <div class="procon-grid">
+      <div class="procon-col pros">
+        <h4>What you gain</h4>
+        <ul>
+          <li><strong>Brand new equipment</strong> — lower breakdown risk over 5 years, full manufacturer support</li>
+          <li><strong>HP Wolf Security</strong> — enterprise-grade with self-healing BIOS, SIEM integration, zero-day detection</li>
+          <li><strong>Better processor</strong> — quad-core 1.6 GHz, 6 GB RAM vs current 3.5–5.6 GB</li>
+          <li><strong>Existing vendor relationship</strong> — known service quality, deposit transfers over</li>
+          <li><strong>Scan to SharePoint, sFTP</strong> — more cloud scan destinations than current</li>
+          <li><strong>Lower sleep power</strong> — 0.8W vs current 1.6W</li>
+        </ul>
+      </div>
+      <div class="procon-col cons">
+        <h4>What you lose vs current</h4>
+        <ul>
+          <li><strong>Print speed drops significantly</strong> — 23 ppm (28 w/ licence) vs Sales Office 60 ppm and Finance 40 ppm. Noticeably slower for batch jobs</li>
+          <li><strong>Print resolution halved</strong> — 1200 × 1200 dpi vs current 2400 × 1200 dpi. Fine for mono docs but visible on colour photos/marketing</li>
+          <li><strong>ADF capacity halved</strong> — 100 sheets vs current 200 sheets</li>
+          <li><strong>Scan speed drops vs Sales Office</strong> — 120 ipm duplex vs 240 ipm (but faster than Finance's 35 ipm)</li>
+          <li><strong>Paper capacity drops</strong> — max 2,180 vs Sales Office 4,650 sheets</li>
+          <li><strong>Monthly duty cycle drops</strong> — 60K–80K vs current 150K pages</li>
+          <li><strong>Colour per-copy up</strong> — RM 0.45 vs old contract RM 0.35</li>
+          <li><strong>No trial period offered</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin:24px 0">
+
+    <h3 style="font-size:15px; font-weight:600; margin-bottom:16px; color:var(--text-primary)">Dynacom — Canon iR-ADV C3530i <span class="tag tag-recond">Recond</span></h3>
+    <div class="procon-grid">
+      <div class="procon-col pros">
+        <h4>What you gain</h4>
+        <ul>
+          <li><strong>Significantly cheaper</strong> — RM 147–190/month less per unit than LBS at every volume tier</li>
+          <li><strong>Faster first copy</strong> — 5.9 sec BW vs 7.3s (E785) and 7.9s (current). The quickest of all options for walk-up one-offs</li>
+          <li><strong>Larger touchscreen</strong> — 10.1" vs 8.0" (easier to use, more readable)</li>
+          <li><strong>Wireless built-in</strong> — standard, no extra accessory needed</li>
+          <li><strong>Canon MEAP platform</strong> — extensible with apps and integrations</li>
+          <li><strong>250 GB HDD standard</strong> — built-in document storage (Advanced Box)</li>
+          <li><strong>Colour per-copy cheaper</strong> — RM 0.40 vs LBS RM 0.45</li>
+          <li><strong>2-month free demo</strong> — try before you commit</li>
+          <li><strong>Existing vendor relationship</strong> — Canon IR 2425 at Front Office since Jan 2023 (RM120/mo, Dynamic Office Sdn Bhd). Known contact: Lim Tow Lin</li>
+          <li><strong>Finance P77940 parity on duplex scan</strong> — same 35 ipm, and actually faster single-sided (70 vs 50 ipm)</li>
+        </ul>
+      </div>
+      <div class="procon-col cons">
+        <h4>What you lose vs current</h4>
+        <ul>
+          <li><strong>Reconditioned</strong> — higher breakdown risk, unknown prior usage/mileage</li>
+          <li><strong>Print speed drops</strong> — 30 ppm vs Sales Office 60 ppm (but only 25% slower than Finance 40 ppm)</li>
+          <li><strong>Print resolution halved</strong> — 1200 × 1200 dpi vs current 2400 × 1200 dpi</li>
+          <li><strong>ADF capacity halved</strong> — 100 sheets vs current 200</li>
+          <li><strong>Sales Office duplex scan much slower</strong> — 35 ipm vs E77660's 240 ipm (7× slower) unless unit has Single-Pass DADF</li>
+          <li><strong>Add-ons uncertain</strong> — DADF-A1 and Finisher-K1 only if recond unit comes with them (see Add-ons tab)</li>
+          <li><strong>Paper capacity lower vs Sales Office</strong> — max 2,300 vs 4,650</li>
+          <li><strong>Service response untested for colour MFP</strong> — existing IR 2425 contract is mono only</li>
+          <li><strong>RM 1,000 deposit required</strong> — refundable, but cash outlay for 2 units</li>
+          <li><strong>Less RAM</strong> — 3 GB vs current 3.5–5.6 GB</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin:24px 0">
+
+    <h3 style="font-size:15px; font-weight:600; margin-bottom:16px; color:var(--text-primary)">Future Option — Canon imageFORCE C3100 Series <span class="tag tag-new">New</span> (no pricing yet)</h3>
+    <div class="procon-grid">
+      <div class="procon-col pros">
+        <h4>What you'd gain</h4>
+        <ul>
+          <li><strong>Brand new</strong> — current-generation Canon, eliminates recond risk</li>
+          <li><strong>4800 × 2400 dpi</strong> — 2× your current resolution, best of all options</li>
+          <li><strong>SSD storage</strong> — faster, more durable than HDD</li>
+          <li><strong>5 GB RAM</strong> — better than both current and Canon C3530i</li>
+          <li><strong>Scan up to 270 ipm duplex</strong> — faster than even your Sales Office E77660 (240 ipm)</li>
+          <li><strong>200-sheet ADF option</strong> — matches your current capacity</li>
+          <li><strong>AI-assisted maintenance</strong> — predictive servicing</li>
+          <li><strong>FIPS 140-3 / TLS 1.3</strong> — latest security standards</li>
+          <li><strong>0.5W sleep</strong> — lowest power of all options</li>
+        </ul>
+      </div>
+      <div class="procon-col cons">
+        <h4>Unknowns</h4>
+        <ul>
+          <li><strong>No pricing yet</strong> — could be more expensive than C3530i recond</li>
+          <li><strong>Availability unclear</strong> — may not be ready within your 2-week window</li>
+          <li><strong>Colour MFP service untested</strong> — existing Dynacom relationship is mono IR 2425 only</li>
+          <li><strong>Print speed comparable</strong> — 30 ppm (C3130), still below Sales Office 60 ppm</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DYNACOM ADD-ONS TAB ===== -->
+  <div class="tab-panel" id="tab-addons" role="tabpanel">
+    <div class="section-desc">Optional add-ons for the Dynacom Canon iR-ADV C3530i. Dynacom has confirmed these are <strong>only available if the reconditioned unit already has them fitted</strong> — they cannot be added afterwards. Ask Dynacom whether the demo/allocated units include either of these.</div>
+
+    <div class="addon-card">
+      <h4>Single-Pass DADF-A1 <span class="tag tag-recond">if fitted</span></h4>
+      <div class="addon-specs">
+        <strong>What it does:</strong> Replaces the standard DADF-AV1 with a single-pass duplex scanner that scans both sides of the page simultaneously — no flipping.<br>
+        <strong>ADF capacity:</strong> 150 sheets (vs 100 on standard DADF-AV1)<br>
+        <strong>Scan speed (1-sided):</strong> 80 ipm (vs 70 on standard)<br>
+        <strong>Scan speed (2-sided):</strong> <strong>160 ipm</strong> (vs 35 on standard — 4.6× faster) <span class="speed-badge speed-faster">major upgrade</span><br>
+        <strong>Why it matters:</strong> This single add-on transforms the Canon's biggest weakness. At 160 ipm duplex, it's faster than the HP E785 (120 ipm) and approaches your Sales Office E77660 (240 ipm). The 150-sheet tray also partially closes the gap from your current 200-sheet ADF. <strong>If you go Dynacom, insist on units with this fitted.</strong>
+      </div>
+    </div>
+
+    <div class="addon-card">
+      <h4>Inner Finisher-K1 <span class="tag tag-recond">if fitted</span></h4>
+      <div class="addon-specs">
+        <strong>What it does:</strong> Adds stapling and offset sorting to the output tray.<br>
+        <strong>Tray capacity:</strong> 2-tray, 600 sheets total (Tray A: 500 sheets, Tray B: 100 sheets)<br>
+        <strong>Stapling:</strong> Corner or double staple, up to 50 sheets per set<br>
+        <strong>Offset sorting:</strong> Yes (staggered output for collated sets)<br>
+        <strong>Why it matters:</strong> Useful if your teams regularly produce multi-page stapled documents (reports, invoices, meeting packs). Without this, staff need to manually staple — a minor inconvenience at your volume but noticeable in Finance where collated reports are common. Neither your current machines nor the LBS E785 include a finisher by default either, so this would be a gain.
+      </div>
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:16px">
+      <strong>Key question for Dynacom:</strong> When you arrange the 2-month demo, ask specifically: "Do the units you're providing come with the Single-Pass DADF-A1 and/or Inner Finisher-K1?" If they can source units with the DADF-A1, the Canon becomes a much stronger contender — especially for the Sales Office where duplex scan speed matters most. Without it, the Sales Office feels the biggest downgrade.
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ========== RECOMMENDED NEXT STEPS ========== -->
+<div class="section">
+  <div class="section-title">Recommended Next Steps</div>
+  <div class="section-desc">You have roughly 2 weeks. Here's a suggested action plan.</div>
+  <ol class="steps-list">
+    <li><strong>Take the Dynacom 2-month demo immediately.</strong> This is free and risk-free. Request a unit with the Single-Pass DADF-A1 if possible. Put it in the sales office for real-world testing alongside your existing HP.</li>
+    <li><strong>Ask Dynacom for the meter count on the recond units.</strong> A reconditioned copier with 50K pages on it is very different from one with 500K. This is the single biggest risk factor — get the numbers.</li>
+    <li><strong>Push Dynacom for C3100 pricing and timeline.</strong> If they can quote the imageFORCE C3130 (brand new, 30 ppm) within your decision window, it may be the best of both worlds — Canon pricing with new-equipment reliability.</li>
+    <li><strong>Use the Dynacom quote to negotiate LBS down.</strong> Show them the RM 235/month figure. Their RM 380 rental is hard to justify at your usage level. Ask for either a lower rental or 10K free copies instead of 5K.</li>
+    <li><strong>Clarify LBS E785 speed.</strong> The base spec is only 23 ppm — less than your current 40 ppm. Ask if the 28 ppm speed licence (8EP54AAE) is included, and whether a faster model is available.</li>
+    <li><strong>Decide and sign.</strong> Both Dynacom quotes have 7-day validity (expired 31 Aug). Get refreshed quotes and lock in before the vendor withdraws terms.</li>
+  </ol>
+</div>
+
+</div>
+
+<script>
+// Theme toggle
+(function() {
+  var toggle = document.getElementById('themeToggle');
+  var label = document.getElementById('themeLabel');
+  var root = document.documentElement;
+  try { var stored = localStorage.getItem('theme'); if (stored) root.setAttribute('data-theme', stored); } catch(e) {}
+  function updateLabel() {
+    var t = root.getAttribute('data-theme');
+    label.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
+  }
+  updateLabel();
+  toggle.addEventListener('click', function() {
+    var current = root.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch(e) {}
+    updateLabel();
+  });
+})();
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); b.tabIndex = -1; });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    btn.tabIndex = 0;
+    document.getElementById('tab-' + tab).classList.add('active');
+  });
+  btn.addEventListener('keydown', e => {
+    const tabs = [...document.querySelectorAll('.tab-btn')];
+    const i = tabs.indexOf(btn);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const next = e.key === 'ArrowRight' ? (i+1) % tabs.length : (i-1+tabs.length) % tabs.length;
+      tabs[next].click();
+      tabs[next].focus();
+    }
+  });
+});
+</script>
